@@ -1,7 +1,6 @@
 package com.andon.springbootspringdatajpa.service;
 
 import com.andon.springbootspringdatajpa.domain.EntityDataSet;
-import com.andon.springbootspringdatajpa.domain.EntityUser;
 import com.andon.springbootspringdatajpa.domain.ResponseStandard;
 import com.andon.springbootspringdatajpa.repository.DataSetRepository;
 import com.andon.springbootspringdatajpa.vo.VoDataSet;
@@ -53,6 +52,7 @@ public class DataSetService {
         VoDataSet voDataSet = new VoDataSet();
         Optional<EntityDataSet> byId = dataSetRepository.findById(id);
         byId.ifPresent(entityDataSet2 -> BeanUtils.copyProperties(entityDataSet2, voDataSet));
+        // TODO 参数添加创建者者信息后，Bean转换后返回会报错
         return voDataSet;
     }
 
