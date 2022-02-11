@@ -77,6 +77,7 @@ public class DataSetService {
 ////                predicateList.add(in);
 //                predicateList.add(cb.in(root.get("creator_id")).value(split));
 //            }
+            // TODO join操作
             Predicate[] predicates = new Predicate[predicateList.size()];
             return query.where(predicateList.toArray(predicates)).getRestriction();
         };
