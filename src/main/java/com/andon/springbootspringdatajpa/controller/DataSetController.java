@@ -3,6 +3,7 @@ package com.andon.springbootspringdatajpa.controller;
 import com.andon.springbootspringdatajpa.domain.ResponseStandard;
 import com.andon.springbootspringdatajpa.service.DataSetService;
 import com.andon.springbootspringdatajpa.vo.VoDataSet;
+import com.andon.springbootspringdatajpa.vo.VoDataSetPageReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author Andon
@@ -34,5 +36,10 @@ public class DataSetController {
     @PostMapping("update")
     public ResponseStandard<VoDataSet> update(@Valid @RequestBody VoDataSet voDataSet) {
         return ResponseStandard.successResponse(dataSetService.update(voDataSet));
+    }
+
+    @PostMapping("pageQuery")
+    public ResponseStandard<List<VoDataSet>> pageQuery(@Valid @RequestBody VoDataSetPageReq voDataSetPageReq) {
+        return dataSetService.pageQuery(voDataSetPageReq);
     }
 }

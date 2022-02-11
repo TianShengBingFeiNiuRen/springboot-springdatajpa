@@ -20,7 +20,7 @@ public class ResponseStandard<T> implements Serializable {
     private int code;
     private String message;
     private T data;
-    private int total;
+    private long total;
 
     public static <T> ResponseStandard<T> successResponse(T t) {
         ResponseStandard<T> response = new ResponseStandard<>();

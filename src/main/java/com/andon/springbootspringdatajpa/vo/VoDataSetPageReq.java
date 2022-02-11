@@ -1,6 +1,5 @@
 package com.andon.springbootspringdatajpa.vo;
 
-import com.andon.springbootspringdatajpa.domain.EntityUser;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,7 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class VoDataSet extends PageRequest implements Serializable {
+public class VoDataSetPageReq extends PageRequest implements Serializable {
 
     @NotNull(message = "id不能为空!")
     @ApiModelProperty(value = "id", required = true)
@@ -51,7 +50,4 @@ public class VoDataSet extends PageRequest implements Serializable {
 
     @ApiModelProperty(value = "数据更新时间")
     Date updateTime;
-
-    @ApiModelProperty(value = "创建者信息")
-    EntityUser creator;
 }
