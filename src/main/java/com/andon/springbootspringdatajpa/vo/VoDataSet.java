@@ -52,6 +52,6 @@ public class VoDataSet extends PageRequest implements Serializable {
     @ApiModelProperty(value = "数据更新时间")
     Date updateTime;
 
-//    @ApiModelProperty(value = "创建者信息")
-//    EntityUser creator;
+    @ApiModelProperty(value = "创建者信息")
+    EntityUser creator;
 }
