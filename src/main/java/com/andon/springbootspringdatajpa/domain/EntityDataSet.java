@@ -34,12 +34,9 @@ public class EntityDataSet implements Serializable {
     @Column(columnDefinition = "VARCHAR(255) COMMENT '名称'", nullable = false, unique = true)
     String name;
 
-//    @Enumerated(EnumType.STRING)
-//    @Column(columnDefinition = "VARCHAR(100) COMMENT '数据可见性: SELF -> 仅自己 ALL -> 所有人'", nullable = false)
-//    VisibleLevel visibleLevel;
-
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(100) COMMENT '数据可见性: SELF -> 仅自己 ALL -> 所有人'", nullable = false)
-    String visibleLevel;
+    VisibleLevel visibleLevel;
 
     @Column(columnDefinition = "TINYINT(1) DEFAULT 0 COMMENT '有效性' ", nullable = false)
     boolean available;

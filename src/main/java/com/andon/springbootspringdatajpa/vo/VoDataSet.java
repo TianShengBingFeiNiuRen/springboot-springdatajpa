@@ -1,6 +1,7 @@
 package com.andon.springbootspringdatajpa.vo;
 
 import com.andon.springbootspringdatajpa.domain.EntityUser;
+import com.andon.springbootspringdatajpa.domain.VisibleLevel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -28,13 +29,9 @@ public class VoDataSet extends PageRequest implements Serializable {
     @ApiModelProperty(value = "名称", required = true)
     String name;
 
-//    @NotNull(message = "数据可见性不能为空!")
-//    @ApiModelProperty(value = "数据可见性: SELF -> 仅自己 ALL -> 所有人", required = true)
-//    VisibleLevel visibleLevel;
-
     @NotNull(message = "数据可见性不能为空!")
     @ApiModelProperty(value = "数据可见性: SELF -> 仅自己 ALL -> 所有人", required = true)
-    String visibleLevel;
+    VisibleLevel visibleLevel;
 
     @NotNull(message = "有效性不能为空!")
     @ApiModelProperty(value = "有效性", required = true)

@@ -32,7 +32,6 @@ public class DataSetService {
     private final DataSetRepository dataSetRepository;
 
     public VoDataSet add(VoDataSet voDataSet) {
-        // TODO RequestBody接收枚举类型
         EntityDataSet entityDataSet = new EntityDataSet();
         BeanUtils.copyProperties(voDataSet, entityDataSet);
         BeanUtils.copyProperties(dataSetRepository.save(entityDataSet), voDataSet);
