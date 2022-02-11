@@ -9,10 +9,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      # ×Ô¶¯´´½¨±í½á¹¹
+      # è‡ªåŠ¨åˆ›å»ºè¡¨ç»“æ„
       ddl-auto: update
     show-sql: true
-  # springbootĞòÁĞ»¯Òì³£FAIL_ON_EMPTY_BEANS´¦Àí
+  # springbootåºåˆ—åŒ–å¼‚å¸¸FAIL_ON_EMPTY_BEANSå¤„ç†
   jackson:
     serialization:
       FAIL_ON_EMPTY_BEANS: false
