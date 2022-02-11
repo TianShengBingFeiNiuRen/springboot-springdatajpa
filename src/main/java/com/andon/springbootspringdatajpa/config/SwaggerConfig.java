@@ -43,7 +43,7 @@ public class SwaggerConfig {
                 .build()
                 .globalOperationParameters(parameterList)
                 .apiInfo(new ApiInfoBuilder()
-                        .title("spring-boot-util")
+                        .title("springboot-springdatajpa")
                         .description("")
                         .version("v1.0")
                         .contact(new Contact("", "", ""))

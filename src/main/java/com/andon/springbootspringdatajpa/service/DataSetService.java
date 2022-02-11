@@ -66,9 +66,18 @@ public class DataSetService {
             if (voDataSetPageReq.getDescription() != null && !voDataSetPageReq.getDescription().isEmpty()) {
                 predicateList.add(cb.equal(root.get("description"), voDataSetPageReq.getDescription()));
             }
+            // TODO 日期处理
             if (voDataSetPageReq.getCreateTime() != null) {
-                predicateList.add(cb.greaterThanOrEqualTo(root.get("createTime"), voDataSetPageReq.getCreateTime()));
+                predicateList.add(cb.greaterThanOrEqualTo(root.get("create_time"), voDataSetPageReq.getCreateTime()));
             }
+            // TODO in条件
+//            if (voDataSetPageReq.getCreatorId() != null) {
+//                String[] split = voDataSetPageReq.getCreatorId().split(",");
+////                CriteriaBuilder.In<Object> in = cb.in(root.get("creator_id"));
+////                Arrays.stream(split).forEach(in::value);
+////                predicateList.add(in);
+//                predicateList.add(cb.in(root.get("creator_id")).value(split));
+//            }
             Predicate[] predicates = new Predicate[predicateList.size()];
             return query.where(predicateList.toArray(predicates)).getRestriction();
         };

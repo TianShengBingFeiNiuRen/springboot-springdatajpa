@@ -50,4 +50,7 @@ public class VoDataSetPageReq extends PageRequest implements Serializable {
 
     @ApiModelProperty(value = "数据更新时间")
     Date updateTime;
+
+    @ApiModelProperty(value = "创建人ID,多个逗号分隔，例：asd,zxc")
+    String creatorId;
 }
