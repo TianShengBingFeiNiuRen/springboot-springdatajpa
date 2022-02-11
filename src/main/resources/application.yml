@@ -12,3 +12,7 @@ spring:
       # 自动创建表结构
       ddl-auto: update
     show-sql: true
+  # springboot序列化异常FAIL_ON_EMPTY_BEANS处理
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
