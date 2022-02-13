@@ -20,10 +20,7 @@ import org.springframework.util.ObjectUtils;
 import javax.persistence.criteria.Predicate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -85,13 +82,13 @@ public class DataSetService {
                 predicateList.add(cb.greaterThanOrEqualTo(root.get("createTime"), parse));
             }
             // TODO in条件
-//            if (voDataSetPageReq.getCreatorId() != null) {
-//                String[] split = voDataSetPageReq.getCreatorId().split(",");
-////                CriteriaBuilder.In<Object> in = cb.in(root.get("creator_id"));
-////                Arrays.stream(split).forEach(in::value);
-////                predicateList.add(in);
-//                predicateList.add(cb.in(root.get("creator_id")).value(split));
-//            }
+            if (voDataSetPageReq.getCreatorId() != null) {
+                String[] split = voDataSetPageReq.getCreatorId().split(",");
+                List<EntityUser> userList = Arrays.stream(split)
+                        .map(s -> EntityUser.builder().id(s).build())
+                        .collect(Collectors.toList());
+                predicateList.add(cb.in(root.get("creator")).value(userList));
+            }
             // TODO join操作
             Predicate[] predicates = new Predicate[predicateList.size()];
             return query.where(predicateList.toArray(predicates)).getRestriction();
