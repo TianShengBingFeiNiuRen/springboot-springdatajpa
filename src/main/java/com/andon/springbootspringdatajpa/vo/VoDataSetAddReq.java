@@ -1,5 +1,6 @@
 package com.andon.springbootspringdatajpa.vo;
 
+import com.andon.springbootspringdatajpa.domain.VisibleLevel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -17,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class VoDataSetPageReq extends PageRequest implements Serializable {
+public class VoDataSetAddReq implements Serializable {
 
     @NotNull(message = "id不能为空!")
     @ApiModelProperty(value = "id", required = true)
@@ -27,13 +28,9 @@ public class VoDataSetPageReq extends PageRequest implements Serializable {
     @ApiModelProperty(value = "名称", required = true)
     String name;
 
-//    @NotNull(message = "数据可见性不能为空!")
-//    @ApiModelProperty(value = "数据可见性: SELF -> 仅自己 ALL -> 所有人", required = true)
-//    VisibleLevel visibleLevel;
-
     @NotNull(message = "数据可见性不能为空!")
     @ApiModelProperty(value = "数据可见性: SELF -> 仅自己 ALL -> 所有人", required = true)
-    String visibleLevel;
+    VisibleLevel visibleLevel;
 
     @NotNull(message = "有效性不能为空!")
     @ApiModelProperty(value = "有效性", required = true)
@@ -46,11 +43,11 @@ public class VoDataSetPageReq extends PageRequest implements Serializable {
     String note;
 
     @ApiModelProperty(value = "数据创建时间")
-    String createTime;
+    Date createTime;
 
     @ApiModelProperty(value = "数据更新时间")
-    String updateTime;
+    Date updateTime;
 
-    @ApiModelProperty(value = "创建人ID,多个逗号分隔，例：asd,zxc")
-    String creatorId;
+    @ApiModelProperty(value = "创建者ID")
+    String creator_id;
 }

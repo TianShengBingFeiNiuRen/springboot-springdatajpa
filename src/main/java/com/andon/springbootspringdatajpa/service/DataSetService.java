@@ -1,9 +1,11 @@
 package com.andon.springbootspringdatajpa.service;
 
 import com.andon.springbootspringdatajpa.domain.EntityDataSet;
+import com.andon.springbootspringdatajpa.domain.EntityUser;
 import com.andon.springbootspringdatajpa.domain.ResponseStandard;
 import com.andon.springbootspringdatajpa.repository.DataSetRepository;
 import com.andon.springbootspringdatajpa.vo.VoDataSet;
+import com.andon.springbootspringdatajpa.vo.VoDataSetAddReq;
 import com.andon.springbootspringdatajpa.vo.VoDataSetPageReq;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +15,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.criteria.Predicate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,9 +37,11 @@ public class DataSetService {
 
     private final DataSetRepository dataSetRepository;
 
-    public VoDataSet add(VoDataSet voDataSet) {
+    public VoDataSet add(VoDataSetAddReq voDataSetAddReq) {
+        VoDataSet voDataSet = new VoDataSet();
         EntityDataSet entityDataSet = new EntityDataSet();
-        BeanUtils.copyProperties(voDataSet, entityDataSet);
+        BeanUtils.copyProperties(voDataSetAddReq, entityDataSet);
+        entityDataSet.setCreator(EntityUser.builder().id(voDataSetAddReq.getCreator_id()).build());
         BeanUtils.copyProperties(dataSetRepository.save(entityDataSet), voDataSet);
         return voDataSet;
     }
@@ -51,23 +59,30 @@ public class DataSetService {
         VoDataSet voDataSet = new VoDataSet();
         Optional<EntityDataSet> byId = dataSetRepository.findById(id);
         byId.ifPresent(entityDataSet2 -> BeanUtils.copyProperties(entityDataSet2, voDataSet));
-        // TODO 参数添加创建者者信息后，Bean转换后返回会报错
         return voDataSet;
     }
 
     public ResponseStandard<List<VoDataSet>> pageQuery(VoDataSetPageReq voDataSetPageReq) {
         List<VoDataSet> list = new ArrayList<>();
-        Specification<EntityDataSet> specification = (Specification<EntityDataSet>) (root, query, cb) -> {
+        Specification<EntityDataSet> specification = (root, query, cb) -> {
             List<Predicate> predicateList = new ArrayList<>();
-            if (voDataSetPageReq.getName() != null) {
+            if (!ObjectUtils.isEmpty(voDataSetPageReq.getName())) {
                 predicateList.add(cb.like(root.get("name"), "%" + voDataSetPageReq.getName() + "%"));
             }
-            if (voDataSetPageReq.getDescription() != null && !voDataSetPageReq.getDescription().isEmpty()) {
+            if (!ObjectUtils.isEmpty(voDataSetPageReq.getDescription())) {
                 predicateList.add(cb.equal(root.get("description"), voDataSetPageReq.getDescription()));
             }
             // TODO 日期处理
-            if (voDataSetPageReq.getCreateTime() != null) {
-                predicateList.add(cb.greaterThanOrEqualTo(root.get("create_time"), voDataSetPageReq.getCreateTime()));
+            if (!ObjectUtils.isEmpty(voDataSetPageReq.getCreateTime())) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String createTime = voDataSetPageReq.getCreateTime();
+                Date parse = new Date();
+                try {
+                    parse = simpleDateFormat.parse(createTime);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                predicateList.add(cb.greaterThanOrEqualTo(root.get("createTime"), parse));
             }
             // TODO in条件
 //            if (voDataSetPageReq.getCreatorId() != null) {

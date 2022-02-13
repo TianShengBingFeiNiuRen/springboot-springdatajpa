@@ -3,6 +3,7 @@ package com.andon.springbootspringdatajpa.controller;
 import com.andon.springbootspringdatajpa.domain.ResponseStandard;
 import com.andon.springbootspringdatajpa.service.DataSetService;
 import com.andon.springbootspringdatajpa.vo.VoDataSet;
+import com.andon.springbootspringdatajpa.vo.VoDataSetAddReq;
 import com.andon.springbootspringdatajpa.vo.VoDataSetPageReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,8 @@ public class DataSetController {
     private final DataSetService dataSetService;
 
     @PostMapping("add")
-    public ResponseStandard<VoDataSet> add(@Valid @RequestBody VoDataSet voDataSet) {
-        return ResponseStandard.successResponse(dataSetService.add(voDataSet));
+    public ResponseStandard<VoDataSet> add(@Valid @RequestBody VoDataSetAddReq voDataSetAddReq) {
+        return ResponseStandard.successResponse(dataSetService.add(voDataSetAddReq));
     }
 
     @GetMapping("query")

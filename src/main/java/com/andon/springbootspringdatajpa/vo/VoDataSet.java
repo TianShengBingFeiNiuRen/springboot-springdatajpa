@@ -19,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class VoDataSet extends PageRequest implements Serializable {
+public class VoDataSet implements Serializable {
 
     @NotNull(message = "id不能为空!")
     @ApiModelProperty(value = "id", required = true)
