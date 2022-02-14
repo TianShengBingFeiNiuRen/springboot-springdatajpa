@@ -16,4 +16,8 @@ public interface DataSetRepository extends JpaRepository<EntityDataSet, String>,
 
     @Query(nativeQuery = true, value = "SELECT `id`,`name` FROM `data_set` ORDER BY `create_time`;")
     List<Map<String, Object>> test();
+
+    @Query(nativeQuery = true, value = "SELECT *,`visible_level` AS `visibleLevel`,`create_time` AS `createTime`,`update_time` AS `updateTime` " +
+            "FROM `data_set` ORDER BY `create_time`")
+    List<Map<String, Object>> test2();
 }

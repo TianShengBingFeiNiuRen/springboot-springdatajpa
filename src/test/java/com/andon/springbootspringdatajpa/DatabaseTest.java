@@ -3,6 +3,8 @@ package com.andon.springbootspringdatajpa;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.andon.springbootspringdatajpa.repository.DataSetRepository;
+import com.andon.springbootspringdatajpa.util.SerializationUtil;
+import com.andon.springbootspringdatajpa.vo.VoDataSet;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,36 @@ public class DatabaseTest {
 
     @Resource
     private DataSetRepository repository;
+
+    @Test
+    public void test03() {
+        List<Map<String, Object>> maps = repository.test2();
+        log.info("maps:{}", maps);
+        byte[] serialize = SerializationUtil.serialize(maps);
+        String serializeString = new String(serialize);
+        log.info("serializeString:{}", serializeString);
+        List<VoDataSet> voDataSetList = SerializationUtil.deserialize(serialize, new com.fasterxml.jackson.core.type.TypeReference<List<VoDataSet>>() {
+        });
+        log.info("voDataSetList:{}", voDataSetList);
+        byte[] bytes = SerializationUtil.serialize(voDataSetList);
+        String s = new String(bytes);
+        log.info("s:{}", s);
+    }
+
+    @Test
+    public void test02() {
+        // TODO 返回json tinyint 0,1转boolean
+        // TODO 返回json 字符串 转 枚举
+        // TODO 返回json datetime 转 Date
+        List<Map<String, Object>> maps = repository.test2();
+        String jsonString = JSONObject.toJSONString(maps);
+        log.info("maps:{}", jsonString);
+        List<VoDataSet> voDataSetList = maps.stream()
+                .map(map -> JSONObject.<VoDataSet>parseObject(JSONObject.toJSONString(map), new TypeReference<VoDataSet>() {
+                }.getType()))
+                .collect(Collectors.toList());
+        log.info("voDataSetList:{}", JSONObject.toJSONString(voDataSetList));
+    }
 
     @Test
     public void test01() {
