@@ -47,6 +47,10 @@ public class EntityDataSet implements Serializable {
     @Column(columnDefinition = "VARCHAR(1000) COMMENT '备注'")
     String note;
 
+    @Column(columnDefinition = "DATETIME DEFAULT NULL COMMENT '最新触发时间' ")
+    @Temporal(TemporalType.TIMESTAMP)
+    Date latestEnableTime;
+
     @CreatedDate
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

@@ -43,6 +43,9 @@ public class VoDataSet implements Serializable {
     @ApiModelProperty(value = "备注")
     String note;
 
+    @ApiModelProperty(value = "最新触发时间")
+    Date latestEnableTime;
+
     @ApiModelProperty(value = "数据创建时间")
     Date createTime;
 

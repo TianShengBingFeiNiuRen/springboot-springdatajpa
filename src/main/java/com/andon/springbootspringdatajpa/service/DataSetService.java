@@ -45,6 +45,28 @@ public class DataSetService {
         return voDataSet;
     }
 
+    public VoDataSet enable(String datasetId) {
+        VoDataSet voDataSet = new VoDataSet();
+        Optional<EntityDataSet> byId = dataSetRepository.findById(datasetId);
+        byId.ifPresent(entityDataSet -> {
+            entityDataSet.setLatestEnableTime(new Date());
+            EntityDataSet save = dataSetRepository.save(entityDataSet);
+            BeanUtils.copyProperties(save, voDataSet);
+        });
+        return voDataSet;
+    }
+
+    public VoDataSet disable(String datasetId) {
+        VoDataSet voDataSet = new VoDataSet();
+        Optional<EntityDataSet> byId = dataSetRepository.findById(datasetId);
+        byId.ifPresent(entityDataSet -> {
+            entityDataSet.setLatestEnableTime(null);
+            EntityDataSet save = dataSetRepository.save(entityDataSet);
+            BeanUtils.copyProperties(save, voDataSet);
+        });
+        return voDataSet;
+    }
+
     public VoDataSet update(VoDataSet voDataSet) {
         Optional<EntityDataSet> byId = dataSetRepository.findById(voDataSet.getId());
         byId.ifPresent(entityDataSet -> {
@@ -84,7 +106,7 @@ public class DataSetService {
                 predicateList.add(cb.greaterThanOrEqualTo(root.get("createTime"), parse));
             }
             // TODO in条件
-            if (voDataSetPageReq.getCreatorId() != null) {
+            if (!ObjectUtils.isEmpty(voDataSetPageReq.getCreatorId())) {
                 String[] split = voDataSetPageReq.getCreatorId().split(",");
                 List<EntityUser> userList = Arrays.stream(split)
                         .map(s -> EntityUser.builder().id(s).build())

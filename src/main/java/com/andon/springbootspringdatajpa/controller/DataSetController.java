@@ -6,10 +6,7 @@ import com.andon.springbootspringdatajpa.vo.VoDataSet;
 import com.andon.springbootspringdatajpa.vo.VoDataSetAddReq;
 import com.andon.springbootspringdatajpa.vo.VoDataSetPageReq;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,6 +24,16 @@ public class DataSetController {
     @PostMapping("add")
     public ResponseStandard<VoDataSet> add(@Valid @RequestBody VoDataSetAddReq voDataSetAddReq) {
         return ResponseStandard.successResponse(dataSetService.add(voDataSetAddReq));
+    }
+
+    @GetMapping("enable/{datasetId}")
+    public ResponseStandard<VoDataSet> enable(@PathVariable String datasetId) {
+        return ResponseStandard.successResponse(dataSetService.enable(datasetId));
+    }
+
+    @GetMapping("disable/{datasetId}")
+    public ResponseStandard<VoDataSet> disable(@PathVariable String datasetId) {
+        return ResponseStandard.successResponse(dataSetService.disable(datasetId));
     }
 
     @GetMapping("query")
