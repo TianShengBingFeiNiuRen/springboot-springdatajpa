@@ -38,7 +38,9 @@ public class DataSetService {
         VoDataSet voDataSet = new VoDataSet();
         EntityDataSet entityDataSet = new EntityDataSet();
         BeanUtils.copyProperties(voDataSetAddReq, entityDataSet);
-        entityDataSet.setCreator(EntityUser.builder().id(voDataSetAddReq.getCreator_id()).build());
+        if (!ObjectUtils.isEmpty(voDataSetAddReq.getCreator_id())) {
+            entityDataSet.setCreator(EntityUser.builder().id(voDataSetAddReq.getCreator_id()).build());
+        }
         BeanUtils.copyProperties(dataSetRepository.save(entityDataSet), voDataSet);
         return voDataSet;
     }
